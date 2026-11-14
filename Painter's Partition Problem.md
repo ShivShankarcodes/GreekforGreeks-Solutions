@@ -21,9 +21,57 @@ The problem can be found at the following link: [Question Link](https://www.geek
 - **Expected Time Complexity:** O(n * log(sum(arr)))
 - **Expected Auxiliary Space Complexity:** O(1)
 
-### Accepted Solutions (1)
+### Accepted Solutions (2)
 
 #### Solution 1 (C++)
+
+- **Submitted:** 2026-11-14 20:50:13
+- **Status:** Correct
+- **Marks:** 0
+
+```cpp
+class Solution {
+public:
+    bool isPossible(vector<int> &arr, int k,int n, long long mid){
+        int painter = 1; 
+        long long time = 0;
+        for(int i=0;i<n;i++){
+            if(time + arr[i] <= mid){
+                time += arr[i];
+            }else{
+                painter++;
+                time = arr[i];
+            }
+        }
+        if(painter > k) return false;
+        else return true;
+    }
+    int minTime(vector<int>& arr, int k) {
+        int n = arr.size();
+        long long sum = 0;
+        int max = 0;
+        for(int i=0;i<n;i++){
+            if(arr[i] > max) max = arr[i];
+            sum += arr[i];
+        }
+        
+        long long ans = -1;
+        long long start = max , end = sum;
+        while(start <= end){
+            long long mid = start + (end - start)/2;
+            if(isPossible(arr,k,n,mid)){
+                ans = mid;
+                end = mid - 1;
+            }else{
+                start = mid + 1;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+#### Solution 2 (C++)
 
 - **Submitted:** 2026-11-14 20:13:23
 - **Status:** Correct
@@ -73,4 +121,4 @@ public:
 };
 ```
 
-*Generated on: 14/11/2026, 8:14:02 pm*
+*Generated on: 14/11/2026, 8:50:08 pm*
